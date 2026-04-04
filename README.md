@@ -1,0 +1,146 @@
+# AnimationManager
+
+Centralized animation controller for Unity.  
+Manages Animator state transitions across a target `Animator`, supports JSON-driven animation definitions for modding, and exposes events for cross-module integration via bridge components.
+
+
+## Features
+
+- **Play / CrossFade / Stop** — unified API for immediate play, smooth crossfade, and explicit stop
+- **Duration tracking** — fires `OnAnimationCompleted` when a non-looping animation reaches its natural end
+- **JSON / Modding** — define animation entries in `StreamingAssets/animations.json`; merged by `id` on top of Inspector data
+- **Events** — `OnAnimationStarted`, `OnAnimationStopped`, `OnAnimationCompleted` for reactive integration
+- **CutsceneManager integration** — execute animations from cutscene custom events (`anim.play:id`, `anim.fade:id`, `anim.stop`) (activated via `ANIMATIONMANAGER_CSM`)
+- **StateManager integration** — auto-play state-linked animations on `AppState` change (activated via `ANIMATIONMANAGER_STM`)
+- **MapLoaderFramework integration** — stop current animation on chapter change (activated via `ANIMATIONMANAGER_MLF`)
+- **CharacterManager integration** — swap `RuntimeAnimatorController` on active character change (activated via `ANIMATIONMANAGER_CM`)
+- **SaveManager integration** — persist and restore active animation id across saves (activated via `ANIMATIONMANAGER_SM`)
+- **EventManager integration** — broadcast `animation.started/stopped/completed` events (activated via `ANIMATIONMANAGER_EM` or `EVENTMANAGER_ANM`)
+- **Custom Inspector** — live playback controls, current animation display, and registered animation list in Play Mode
+
+
+## Installation
+
+### Option A — Unity Package Manager (Git URL)
+
+1. Open **Window → Package Manager**
+2. Click **+** → **Add package from git URL…**
+3. Enter:
+
+   ```
+   https://github.com/RolandKaechele/AnimationManager.git
+   ```
+
+### Option B — Clone into Assets
+
+```bash
+git clone https://github.com/RolandKaechele/AnimationManager.git Assets/AnimationManager
+```
+
+### Option C — npm / postinstall
+
+```bash
+cd Assets/AnimationManager
+npm install
+```
+
+
+## Scene Setup
+
+1. Create a persistent manager GameObject (or reuse your existing manager object).
+2. Attach `AnimationManager`.
+3. Assign `Target Animator` (the `Animator` component to control).
+4. Add animation definitions in the Inspector or via `animations.json`.
+5. Add any bridge components (see Bridge Components below).
+
+
+## Quick Start
+
+### Inspector Fields
+
+| Field | Default | Description |
+| ----- | ------- | ----------- |
+| `targetAnimator` | *(none)* | Animator component to control |
+| `animations` | *(empty)* | Built-in animation definitions |
+| `loadFromJson` | `false` | Merge definitions from `animations.json` |
+| `jsonPath` | `"animations.json"` | Path relative to `StreamingAssets/` |
+| `defaultCrossFadeDuration` | `0.25` | Seconds used by `CrossFade()` when no duration is passed |
+| `verboseLogging` | `false` | Log all transitions to Console |
+
+### AnimationDefinition fields
+
+| Field | Description |
+| ----- | ----------- |
+| `id` | Unique id, e.g. `"idle"`, `"walk"`, `"attack"` |
+| `displayName` | Human-readable label |
+| `stateName` | Animator state name as set in the Animator Controller |
+| `controllerPath` | Optional Resources path to a `RuntimeAnimatorController` to swap in |
+| `category` | Tag, e.g. `"combat"`, `"cinematic"` |
+| `loop` | If `true`, `OnAnimationCompleted` is never fired |
+| `duration` | Approximate clip length in seconds (used for completion timer) |
+
+### Code usage
+
+```csharp
+var anim = FindFirstObjectByType<AnimationManager.Runtime.AnimationManager>();
+
+anim.Play("idle");
+anim.CrossFade("walk");          // uses default crossfade duration
+anim.CrossFade("attack", 0.1f);  // custom duration
+anim.Stop();
+
+// Subscribe to events
+anim.OnAnimationStarted   += id => Debug.Log($"Started: {id}");
+anim.OnAnimationCompleted += id => Debug.Log($"Done: {id}");
+```
+
+
+## Bridge Components
+
+Attach these to the same GameObject as `AnimationManager` (or anywhere in the scene).
+
+| Component | Define | Effect |
+| --------- | ------ | ------ |
+| `CutsceneManagerBridge` | `ANIMATIONMANAGER_CSM` | Responds to `"anim.play:id"`, `"anim.fade:id"`, `"anim.stop"` cutscene custom events |
+| `StateManagerBridge` | `ANIMATIONMANAGER_STM` | Plays mapped animation on `AppState` change |
+| `MapLoaderBridge` | `ANIMATIONMANAGER_MLF` | Stops current animation on chapter change |
+| `CharacterManagerBridge` | `ANIMATIONMANAGER_CM` | Swaps `RuntimeAnimatorController` on character change |
+| `SaveManagerBridge` | `ANIMATIONMANAGER_SM` | Persists/restores active animation id |
+| `EventManagerBridge` | `ANIMATIONMANAGER_EM` | Fires `animation.started/stopped/completed` via EventManager |
+
+EventManager can also re-broadcast AnimationManager events using `AnimationEventBridge` (define: `EVENTMANAGER_ANM`).
+
+
+## JSON / Modding
+
+Place `animations.json` in `StreamingAssets/` (path is configurable):
+
+```json
+{
+  "animations": [
+    {
+      "id": "victory",
+      "displayName": "Victory Pose",
+      "stateName": "VictoryPose",
+      "category": "cinematic",
+      "loop": false,
+      "duration": 3.5
+    }
+  ]
+}
+```
+
+JSON entries are **merged by id** — mods can add new entries or override Inspector definitions without reimporting.
+
+
+## Optional Integrations
+
+| Define | Integration |
+| ------ | ----------- |
+| `ANIMATIONMANAGER_CSM` | AnimationManager ←→ CutsceneManager |
+| `ANIMATIONMANAGER_STM` | AnimationManager ←→ StateManager |
+| `ANIMATIONMANAGER_MLF` | AnimationManager ←→ MapLoaderFramework |
+| `ANIMATIONMANAGER_CM` | AnimationManager ←→ CharacterManager |
+| `ANIMATIONMANAGER_SM` | AnimationManager ←→ SaveManager |
+| `ANIMATIONMANAGER_EM` | AnimationManager → EventManager (fire events) |
+| `EVENTMANAGER_ANM` | EventManager ← AnimationManager (re-broadcast) |

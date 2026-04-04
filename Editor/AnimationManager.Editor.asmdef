@@ -1,0 +1,9 @@
+{
+  "name": "AnimationManager.Editor",
+  "rootNamespace": "AnimationManager.Editor",
+  "references": ["AnimationManager.Runtime"],
+  "includePlatforms": ["Editor"],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "autoReferenced": true
+}
