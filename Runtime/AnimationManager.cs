@@ -2,6 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+#if ODIN_INSPECTOR
+using Sirenix.OdinInspector;
+#endif
 
 namespace AnimationManager.Runtime
 {
@@ -13,7 +16,11 @@ namespace AnimationManager.Runtime
     /// </summary>
     [AddComponentMenu("Managers/Animation Manager")]
     [DisallowMultipleComponent]
+#if ODIN_INSPECTOR
+    public class AnimationManager : SerializedMonoBehaviour
+#else
     public class AnimationManager : MonoBehaviour
+#endif
     {
         // ──────────────────────────────────────────────────────────
         // Inspector fields

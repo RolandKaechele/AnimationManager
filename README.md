@@ -17,6 +17,7 @@ Manages Animator state transitions across a target `Animator`, supports JSON-dri
 - **SaveManager integration** — persist and restore active animation id across saves (activated via `ANIMATIONMANAGER_SM`)
 - **EventManager integration** — broadcast `animation.started/stopped/completed` events (activated via `ANIMATIONMANAGER_EM` or `EVENTMANAGER_ANM`)
 - **Custom Inspector** — live playback controls, current animation display, and registered animation list in Play Mode
+- **Odin Inspector integration** — `SerializedMonoBehaviour` base for full Inspector serialization of complex types; runtime-display fields marked `[ReadOnly]` in Play Mode (activated via `ODIN_INSPECTOR`)
 
 
 ## Installation
@@ -144,3 +145,4 @@ JSON entries are **merged by id** — mods can add new entries or override Inspe
 | `ANIMATIONMANAGER_SM` | AnimationManager ←→ SaveManager |
 | `ANIMATIONMANAGER_EM` | AnimationManager → EventManager (fire events) |
 | `EVENTMANAGER_ANM` | EventManager ← AnimationManager (re-broadcast) |
+| `ODIN_INSPECTOR` | AnimationManager ↔→ Odin Inspector (`SerializedMonoBehaviour` + `[ReadOnly]`) |
