@@ -17,6 +17,8 @@ Manages Animator state transitions across a target `Animator`, supports JSON-dri
 - **SaveManager integration** — persist and restore active animation id across saves (activated via `ANIMATIONMANAGER_SM`)
 - **EventManager integration** — broadcast `animation.started/stopped/completed` events (activated via `ANIMATIONMANAGER_EM` or `EVENTMANAGER_ANM`)
 - **Custom Inspector** — live playback controls, current animation display, and registered animation list in Play Mode
+- **DOTween Pro integration** — `DOTween.To` and `DOVirtualFloat` drive `CrossFade` weight and animator property tweens for smooth animation blending (activated via `ANIMATIONMANAGER_DOTWEEN`)
+- **RealToon Pro integration** — `MaterialPropertyBlock` sets `_SmearIntensity` on the target renderer during high-velocity animations; reset on `Stop()` / `OnAnimationCompleted` (activated via `ANIMATIONMANAGER_REALTOON`)
 - **Odin Inspector integration** — `SerializedMonoBehaviour` base for full Inspector serialization of complex types; runtime-display fields marked `[ReadOnly]` in Play Mode (activated via `ODIN_INSPECTOR`)
 
 
