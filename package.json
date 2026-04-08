@@ -1,14 +1,23 @@
 {
-  "name": "com.rolandkaechele.animationmanager",
-  "displayName": "AnimationManager",
-  "version": "1.0.0",
-  "unity": "2022.3",
-  "description": "Centralized animation state and transition manager for Unity. Supports cutscenes, gameplay, modding, and bridge integration.",
-  "author": {
-    "name": "Roland Kächele",
-    "email": "roland@kaechele.dev"
-  },
-  "license": "MIT",
-  "keywords": ["animation", "manager", "state", "cutscene", "modding", "unity"],
-  "dependencies": {}
+    "name":  "com.rolandkaechele.animationmanager",
+    "displayName":  "AnimationManager",
+    "version":  "1.0.0",
+    "unity":  "2022.3",
+    "description":  "Centralized animation state and transition manager for Unity. Supports cutscenes, gameplay, modding, and bridge integration.",
+    "author":  {
+                   "name":  "Roland Kächele",
+                   "email":  "roland@kaechele.dev"
+               },
+    "license":  "MIT",
+    "keywords":  [
+                     "animation",
+                     "manager",
+                     "state",
+                     "cutscene",
+                     "modding",
+                     "unity"
+                 ],
+    "dependencies":  {
+
+                     }
 }
