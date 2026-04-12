@@ -13,6 +13,9 @@ namespace AnimationManager.Editor
         {
             DrawDefaultInspector();
 
+            EditorGUILayout.Space(4);
+            if (GUILayout.Button("Open JSON Editor")) AnimationJsonEditorWindow.ShowWindow();
+
             var manager = (AnimationManager.Runtime.AnimationManager)target;
 
             EditorGUILayout.Space();

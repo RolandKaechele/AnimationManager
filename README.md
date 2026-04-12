@@ -148,3 +148,16 @@ JSON entries are **merged by id** — mods can add new entries or override Inspe
 | `ANIMATIONMANAGER_EM` | AnimationManager → EventManager (fire events) |
 | `EVENTMANAGER_ANM` | EventManager ← AnimationManager (re-broadcast) |
 | `ODIN_INSPECTOR` | AnimationManager ↔→ Odin Inspector (`SerializedMonoBehaviour` + `[ReadOnly]`) |
+
+
+## Editor Tools
+
+Open via **JSON Editors → Animation Manager** in the Unity menu bar, or via the **Open JSON Editor** button in the AnimationManager Inspector.
+
+| Action | Result |
+| ------ | ------ |
+| **Load** | Reads `StreamingAssets/animations.json`; creates the file if missing |
+| **Edit** | Add / remove / reorder entries using the Inspector list |
+| **Save** | Writes back to `StreamingAssets/animations.json` and calls `AssetDatabase.Refresh()` |
+
+With **ODIN_INSPECTOR** active, the list uses Odin's enhanced drawer (drag-to-sort, collapsible entries).
