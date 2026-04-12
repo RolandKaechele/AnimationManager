@@ -1,0 +1,13 @@
+﻿{
+    "animations":  [
+                       {
+                           "id":  "jan_run",
+                           "displayName":  "Jan â€” Run",
+                           "stateName":  "Run",
+                           "controllerPath":  "Animators/JanTenner",
+                           "category":  "player",
+                           "loop":  true,
+                           "duration":  0.0
+                       }
+                   ]
+}

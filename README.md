@@ -53,7 +53,7 @@ npm install
 1. Create a persistent manager GameObject (or reuse your existing manager object).
 2. Attach `AnimationManager`.
 3. Assign `Target Animator` (the `Animator` component to control).
-4. Add animation definitions in the Inspector or via `animations.json`.
+4. Add animation definitions in the Inspector or via JSON files in `StreamingAssets/animations/`.
 5. Add any bridge components (see Bridge Components below).
 
 
@@ -161,6 +161,6 @@ Open via **JSON Editors → Animation Manager** in the Unity menu bar, or via th
 | ------ | ------ |
 | **Load** | Reads all `*.json` from `StreamingAssets/animations/`; creates the folder if missing |
 | **Edit** | Add / remove / reorder entries using the Inspector list |
-| **Save** | Writes to `StreamingAssets/animations/animations.json` and calls `AssetDatabase.Refresh()` |
+| **Save** | Writes each entry as `<id>.json` to `StreamingAssets/animations/`; entries without an `id` are skipped. Calls `AssetDatabase.Refresh()` |
 
 With **ODIN_INSPECTOR** active, the list uses Odin's enhanced drawer (drag-to-sort, collapsible entries).

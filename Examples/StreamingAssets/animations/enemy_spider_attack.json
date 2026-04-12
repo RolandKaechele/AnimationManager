@@ -1,0 +1,13 @@
+﻿{
+    "animations":  [
+                       {
+                           "id":  "enemy_spider_attack",
+                           "displayName":  "Green Spider â€” Attack",
+                           "stateName":  "Attack",
+                           "controllerPath":  "Animators/GreenSpider",
+                           "category":  "enemy",
+                           "loop":  false,
+                           "duration":  0.5
+                       }
+                   ]
+}

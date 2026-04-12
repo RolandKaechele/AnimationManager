@@ -1,0 +1,13 @@
+﻿{
+    "animations":  [
+                       {
+                           "id":  "enemy_spider_idle",
+                           "displayName":  "Green Spider â€” Idle",
+                           "stateName":  "Idle",
+                           "controllerPath":  "Animators/GreenSpider",
+                           "category":  "enemy",
+                           "loop":  true,
+                           "duration":  0.0
+                       }
+                   ]
+}

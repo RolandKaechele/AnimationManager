@@ -1,0 +1,13 @@
+﻿{
+    "animations":  [
+                       {
+                           "id":  "jan_hit",
+                           "displayName":  "Jan â€” Hit",
+                           "stateName":  "Hit",
+                           "controllerPath":  "Animators/JanTenner",
+                           "category":  "player",
+                           "loop":  false,
+                           "duration":  0.4
+                       }
+                   ]
+}

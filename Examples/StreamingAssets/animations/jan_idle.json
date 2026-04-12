@@ -1,0 +1,13 @@
+﻿{
+    "animations":  [
+                       {
+                           "id":  "jan_idle",
+                           "displayName":  "Jan â€” Idle",
+                           "stateName":  "Idle",
+                           "controllerPath":  "Animators/JanTenner",
+                           "category":  "player",
+                           "loop":  true,
+                           "duration":  0.0
+                       }
+                   ]
+}

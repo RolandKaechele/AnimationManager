@@ -1,0 +1,13 @@
+﻿{
+    "animations":  [
+                       {
+                           "id":  "jan_death",
+                           "displayName":  "Jan â€” Death",
+                           "stateName":  "Death",
+                           "controllerPath":  "Animators/JanTenner",
+                           "category":  "player",
+                           "loop":  false,
+                           "duration":  1.2
+                       }
+                   ]
+}

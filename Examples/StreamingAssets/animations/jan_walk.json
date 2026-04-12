@@ -1,0 +1,13 @@
+﻿{
+    "animations":  [
+                       {
+                           "id":  "jan_walk",
+                           "displayName":  "Jan â€” Walk",
+                           "stateName":  "Walk",
+                           "controllerPath":  "Animators/JanTenner",
+                           "category":  "player",
+                           "loop":  true,
+                           "duration":  0.0
+                       }
+                   ]
+}
