@@ -8,7 +8,7 @@ Manages Animator state transitions across a target `Animator`, supports JSON-dri
 
 - **Play / CrossFade / Stop** — unified API for immediate play, smooth crossfade, and explicit stop
 - **Duration tracking** — fires `OnAnimationCompleted` when a non-looping animation reaches its natural end
-- **JSON / Modding** — define animation entries in `StreamingAssets/animations.json`; merged by `id` on top of Inspector data
+- **JSON / Modding** — define animation entries in `StreamingAssets/animations/`; merged by `id` on top of Inspector data
 - **Events** — `OnAnimationStarted`, `OnAnimationStopped`, `OnAnimationCompleted` for reactive integration
 - **CutsceneManager integration** — execute animations from cutscene custom events (`anim.play:id`, `anim.fade:id`, `anim.stop`) (activated via `ANIMATIONMANAGER_CSM`)
 - **StateManager integration** — auto-play state-linked animations on `AppState` change (activated via `ANIMATIONMANAGER_STM`)
@@ -65,8 +65,8 @@ npm install
 | ----- | ------- | ----------- |
 | `targetAnimator` | *(none)* | Animator component to control |
 | `animations` | *(empty)* | Built-in animation definitions |
-| `loadFromJson` | `false` | Merge definitions from `animations.json` |
-| `jsonPath` | `"animations.json"` | Path relative to `StreamingAssets/` |
+| `loadFromJson` | `false` | Merge definitions from `animations/` |
+| `jsonPath` | `"animations/"` | Folder relative to `StreamingAssets/` containing `.json` files to merge. Falls back to single-file mode if the value points to an existing file. |
 | `defaultCrossFadeDuration` | `0.25` | Seconds used by `CrossFade()` when no duration is passed |
 | `verboseLogging` | `false` | Log all transitions to Console |
 
@@ -116,7 +116,10 @@ EventManager can also re-broadcast AnimationManager events using `AnimationEvent
 
 ## JSON / Modding
 
-Place `animations.json` in `StreamingAssets/` (path is configurable):
+Place one or more `.json` files in `StreamingAssets/animations/` (path is configurable).
+All `*.json` files in the folder are loaded and merged by `id` at startup.
+
+**Example:** `StreamingAssets/animations/main.json`
 
 ```json
 {
@@ -156,8 +159,8 @@ Open via **JSON Editors → Animation Manager** in the Unity menu bar, or via th
 
 | Action | Result |
 | ------ | ------ |
-| **Load** | Reads `StreamingAssets/animations.json`; creates the file if missing |
+| **Load** | Reads all `*.json` from `StreamingAssets/animations/`; creates the folder if missing |
 | **Edit** | Add / remove / reorder entries using the Inspector list |
-| **Save** | Writes back to `StreamingAssets/animations.json` and calls `AssetDatabase.Refresh()` |
+| **Save** | Writes to `StreamingAssets/animations/animations.json` and calls `AssetDatabase.Refresh()` |
 
 With **ODIN_INSPECTOR** active, the list uses Odin's enhanced drawer (drag-to-sort, collapsible entries).

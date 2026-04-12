@@ -39,7 +39,7 @@ namespace AnimationManager.Runtime
         [SerializeField] private bool loadFromJson;
 
         [Tooltip("Path relative to StreamingAssets/.")]
-        [SerializeField] private string jsonPath = "animations.json";
+        [SerializeField] private string jsonPath = "animations/";
 
         [Header("Transitions")]
         [Tooltip("Default crossfade duration in seconds.")]
@@ -175,27 +175,40 @@ namespace AnimationManager.Runtime
 
         private void LoadJson()
         {
-            string full = Path.Combine(Application.streamingAssetsPath, jsonPath);
-            if (!File.Exists(full))
+            string fullPath = Path.Combine(Application.streamingAssetsPath, jsonPath);
+            if (Directory.Exists(fullPath))
             {
-                Debug.LogWarning($"[AnimationManager] JSON not found: {full}");
-                return;
+                foreach (var file in Directory.GetFiles(fullPath, "*.json", SearchOption.TopDirectoryOnly))
+                    MergeAnimationsFromFile(file);
             }
+            else if (File.Exists(fullPath))
+            {
+                MergeAnimationsFromFile(fullPath);
+            }
+            else
+            {
+                Debug.LogWarning($"[AnimationManager] JSON not found: {fullPath}");
+            }
+        }
+
+        private void MergeAnimationsFromFile(string path)
+        {
             try
             {
-                string json = File.ReadAllText(full);
+                string json = File.ReadAllText(path);
                 var manifest = JsonUtility.FromJson<AnimationManifestJson>(json);
+                if (manifest?.animations == null) return;
                 foreach (var def in manifest.animations)
                 {
                     if (string.IsNullOrEmpty(def.id)) continue;
                     _map[def.id] = def;
                 }
                 if (verboseLogging)
-                    Debug.Log($"[AnimationManager] Loaded {manifest.animations.Count} definitions from {jsonPath}.");
+                    Debug.Log($"[AnimationManager] Merged from {path}.");
             }
             catch (Exception ex)
             {
-                Debug.LogError($"[AnimationManager] Failed to parse {jsonPath}: {ex.Message}");
+                Debug.LogError($"[AnimationManager] Failed to load JSON: {ex.Message}");
             }
         }
 

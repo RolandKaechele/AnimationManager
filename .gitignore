@@ -33,3 +33,5 @@ UserSettings/
 npm-debug.log
 .yarn-integrity
 node_modules/
+
+*.meta
