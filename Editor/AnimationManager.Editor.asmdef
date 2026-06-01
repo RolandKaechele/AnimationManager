@@ -1,7 +1,10 @@
 {
   "name": "AnimationManager.Editor",
   "rootNamespace": "AnimationManager.Editor",
-  "references": ["AnimationManager.Runtime"],
+  "references": [
+        "AnimationManager.Runtime",
+        "UnityEngine.UI"
+  ],
   "includePlatforms": ["Editor"],
   "excludePlatforms": [],
   "allowUnsafeCode": false,
